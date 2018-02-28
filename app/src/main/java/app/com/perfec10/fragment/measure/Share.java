@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,7 +62,6 @@ import java.util.Map;
 
 import app.com.perfec10.R;
 import app.com.perfec10.activity.MainActivity;
-import app.com.perfec10.fragment.home.Home;
 import app.com.perfec10.fragment.self_snaps.SelfSnapDetail;
 import app.com.perfec10.network.Network;
 import app.com.perfec10.network.NetworkConstants;
@@ -101,6 +101,7 @@ public class Share extends Fragment implements GoogleApiClient.OnConnectionFaile
     private String TAG = "Share";
     private View view;
     private Bitmap mbitmap;
+    private RelativeLayout tags_title;
 
     public Share(MainActivity mainActivity, String bust, String waist, String legs, String body,
                  String shoulder, String scores, String angle, Float rating, String mine,
@@ -220,14 +221,15 @@ public class Share extends Fragment implements GoogleApiClient.OnConnectionFaile
 
 
 
-        if(is_externally_Shares==2){
+        if(is_externally_Shares==1){
           /*  View view1 = mainActivity.getCurrentFocus();
             if (view1 != null) {
                 InputMethodManager imm = (InputMethodManager)mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert imm != null;
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }*/
-            mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new Home(mainActivity), "home").commit();
+           // mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new Home(mainActivity), "home").commit();
+            mainActivity.getSupportFragmentManager().popBackStack();
             is_externally_Shares=0;
         }
 
@@ -313,6 +315,7 @@ public class Share extends Fragment implements GoogleApiClient.OnConnectionFaile
         iv_sc10_share = (ImageView) view.findViewById(R.id.iv_sc10_share);
         iv_back_share = (ImageView) view.findViewById(R.id.iv_back_share);
         iv_instagram_share = (ImageView) view.findViewById(R.id.iv_instagram_share);
+        tags_title =  view.findViewById(R.id.tags);
 
         ll_guide_share = (LinearLayout) view.findViewById(R.id.ll_guide_share);
         ll_location_share = (LinearLayout) view.findViewById(R.id.ll_location_share);
@@ -621,9 +624,11 @@ public class Share extends Fragment implements GoogleApiClient.OnConnectionFaile
         ll_all_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                tags_title.setVisibility(View.VISIBLE);
 /*  Sahre Externally Data...........................................*/
                 try {
-                    is_externally_Shares=2;
+                    is_externally_Shares=1;
                     is_externally_Share=1;
                     screenShot(view);
                     Intent i = new Intent(Intent.ACTION_SEND);
@@ -656,6 +661,7 @@ public class Share extends Fragment implements GoogleApiClient.OnConnectionFaile
     }
 
     public void screenShot(View view) {
+        tags_title.setVisibility(View.VISIBLE);
         mbitmap = getBitmapOFRootView(ll_all_share);
      //   iv_instagram_share.setImageBitmap(mbitmap);
         createImage(mbitmap);

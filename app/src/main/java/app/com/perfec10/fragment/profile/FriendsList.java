@@ -37,6 +37,7 @@ import app.com.perfec10.util.PreferenceManager;
 import app.com.perfec10.util.Progress;
 
 import static app.com.perfec10.fragment.profile.EditProfile.social_id;
+import static app.com.perfec10.fragment.profile.EditProfile.user_id_ischeck;
 import static app.com.perfec10.helper.HelperClass.returnEmptyString;
 
 /**
@@ -233,6 +234,8 @@ public class FriendsList extends Fragment implements NetworkCallBack{
                                     social_ids=s;
                                 }*/
                                 String social_ids = getDefaultJsonValue(jso.get("social_id"));
+                                String user_ids = getDefaultJsonValue(jso.get("user_id"));
+
                                 friendListGS.setUserId(jso.get("user_id")+"");
                                 friendListGS.setEmail(jso.get("email")+"");
                                 friendListGS.setName(jso.get("name")+"");
@@ -242,7 +245,9 @@ public class FriendsList extends Fragment implements NetworkCallBack{
                                 friendListGS.setAge(jso.get("age")+"");
                                 friendListGS.setRace(jso.get("race")+"");
                                 friendList.add(friendListGS);
+
                                 social_id.add(Long.valueOf(social_ids));
+                                user_id_ischeck.add(Long.valueOf(user_ids));
                             }
                             groupFriendAdapter1 = new GroupFriendAdapter(mainActivity, friendList, "friend");
                             rv_frndlist_frndlist.setAdapter(groupFriendAdapter1);

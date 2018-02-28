@@ -43,6 +43,7 @@ import app.com.perfec10.network.NetworkConstants;
 import app.com.perfec10.util.PreferenceManager;
 import app.com.perfec10.util.Progress;
 
+import static app.com.perfec10.fragment.profile.EditProfile.user_id_ischeck;
 import static app.com.perfec10.helper.HelperClass.returnEmptyString;
 
 /**
@@ -339,10 +340,22 @@ public class AddAfterSignup extends Fragment implements NetworkCallBack{
                                 addFrndGS.setImage(url);
                                 addFrndGS.setSelected("0");
                                 boolean b = false;// for checking already added id
-                                if (searchedList.size() > 0){
-                                    for (int i = 0; i < searchedList.size(); i++){
-                                        String id = searchedList.get(i).getUserId();
-                                        if (id.equals(user_id)){
+                                if (searchedList.size() > 0) {
+                                    for (int i = 0; i < searchedList.size(); i++) {
+                                        long id = Long.parseLong(searchedList.get(i).getUserId());
+
+                                        for (int j = 0; j < user_id_ischeck.size(); j++) {
+                                            Long ss = user_id_ischeck.get(j);
+                                            if (id == ss) {
+                                                fbFrndsList.remove(addFrndGS);
+                                                Toast.makeText(mainActivity, "You all ready Add", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+                                }
+                                searchedList.add(addFrndGS);
+
+                                        /*
                                             b = true;
                                             break;
                                         }else {
@@ -355,9 +368,30 @@ public class AddAfterSignup extends Fragment implements NetworkCallBack{
                                 if (!b){
                                     searchedList.add(addFrndGS);
                                 }
+*/
+
+/*
+                                if (fbFrndsList != null) {
+                                    for(int i=0;i<fbFrndsList.size();i++){
+                                        FbFrndsGS m=fbFrndsList.get(i);
+                                        Long  s= Long.valueOf(m.getId());
+                                        for(int j=0; j < social_id.size();j++){
+                                            Long ss= social_id.get(j);
+                                            if(s.equals(ss)){
+                                                fbFrndsList.remove(m);
+                                            }
+                                        }
+                                    }*/
+
+
+
+
+
+
                                 View view = mainActivity.getCurrentFocus();
                                 if (view != null) {
                                     InputMethodManager imm = (InputMethodManager)mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    assert imm != null;
                                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                                 }
                                 rv_serachlist_addfrnd.setVisibility(View.VISIBLE);

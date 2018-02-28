@@ -1,7 +1,9 @@
 package app.com.perfec10.fragment.friendgroup;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -55,6 +57,7 @@ import app.com.perfec10.util.PreferenceManager;
 import app.com.perfec10.util.Progress;
 
 import static app.com.perfec10.fragment.profile.EditProfile.social_id;
+import static app.com.perfec10.fragment.profile.EditProfile.user_id_ischeck;
 import static app.com.perfec10.helper.HelperClass.returnEmptyString;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -89,6 +92,7 @@ public class AddFriend extends Fragment implements NetworkCallBack {
     private CallbackManager callbackManager;
     //private ArrayList<FbFrndsGS> fbFriends;
     private PreferenceManager preferenceManager;
+    private boolean flag=false;
 
 
     @Override
@@ -339,14 +343,17 @@ public class AddFriend extends Fragment implements NetworkCallBack {
                         public void onCompleted(JSONArray jsonArray, GraphResponse response) {
                             System.out.println("jsonArray: " + jsonArray);
                             System.out.println("GraphResponse: " + response);
-                            if (jsonArray.length() > 0) {
-                                Log.d(TAG, "have fb frnds");
-                                fbFrndsList = new ArrayList<>();
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    try {
-                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                                             String id = jsonObject.getString("id");
+                            if(jsonArray !=null) {
+
+                                if (jsonArray.length() > 0) {
+                                    Log.d(TAG, "have fb frnds");
+                                    fbFrndsList = new ArrayList<>();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        try {
+                                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                                            String id = jsonObject.getString("id");
                                             String name = jsonObject.getString("name");
                                             String friendsProfilePicUrl = "https://graph.facebook.com/" + id + "/picture?type=normal";
 
@@ -357,62 +364,62 @@ public class AddFriend extends Fragment implements NetworkCallBack {
                                             fbFrndsGS.setStatus("0");
                                             fbFrndsGS.setImage(friendsProfilePicUrl);
 
-                                                fbFrndsList.add(fbFrndsGS);
+                                            fbFrndsList.add(fbFrndsGS);
 
 
-                                       // Log.e("list:>",social_id.toString()==);
+                                            // Log.e("list:>",social_id.toString()==);
 
 
-                                    //    if(social_id.toString()==)
+                                            //    if(social_id.toString()==)
 
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                if (fbFrndsList != null) {
-                                    for(int i=0;i<fbFrndsList.size();i++){
-                                        FbFrndsGS m=fbFrndsList.get(i);
-                                        Long  s= Long.valueOf(m.getId());
-                                        for(int j=0; j < social_id.size();j++){
-                                                Long ss= social_id.get(j);
-                                                if(s.equals(ss)){
-                                                    fbFrndsList.remove(m);
-                                                }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
                                         }
                                     }
 
-                                    if (fbFrndsList.size() > 0) {
-                                       rv_serachlist_addfrnd.setVisibility(View.VISIBLE);
-                                        addFrndAdapter = new AddFrndAdapter(mainActivity, fbFrndsList);
-                                       rv_serachlist_addfrnd.setAdapter(addFrndAdapter);
-                                       addFrndAdapter.notifyDataSetChanged();
-                                    } else {
-                                        rv_serachlist_addfrnd.setVisibility(View.GONE);
+                                    if (fbFrndsList != null) {
+                                        for (int i = 0; i < fbFrndsList.size(); i++) {
+                                            FbFrndsGS m = fbFrndsList.get(i);
+                                            Long s = Long.valueOf(m.getId());
+                                            for (int j = 0; j < social_id.size(); j++) {
+                                                Long ss = social_id.get(j);
+                                                if (s.equals(ss)) {
+                                                    fbFrndsList.remove(m);
+                                                }
+                                            }
+                                        }
+
+                                        if (fbFrndsList.size() > 0) {
+                                            rv_serachlist_addfrnd.setVisibility(View.VISIBLE);
+                                            addFrndAdapter = new AddFrndAdapter(mainActivity, fbFrndsList);
+                                            rv_serachlist_addfrnd.setAdapter(addFrndAdapter);
+                                            addFrndAdapter.notifyDataSetChanged();
+                                        } else {
+                                            rv_serachlist_addfrnd.setVisibility(View.GONE);
+                                        }
+
+
                                     }
 
-
-                                }
-
-                                // addFrndAdapter = new AddFrndAdapter(mainActivitySignUP, fbFrndsList);
-                                //  rv_serachlist_addfrnd.setAdapter(addFrndAdapter);
-                                //  addFrndAdapter.notifyDataSetChanged();
+                                    // addFrndAdapter = new AddFrndAdapter(mainActivitySignUP, fbFrndsList);
+                                    //  rv_serachlist_addfrnd.setAdapter(addFrndAdapter);
+                                    //  addFrndAdapter.notifyDataSetChanged();
 
                                        /* Gson gson = new Gson();
                                         String fnd_list = gson.toJson(fbFriends);
                                         preferenceManager.setKey_frindsfb(fnd_list);*/
-                                //  FbFrndsGS fbFrndsGS = new FbFrndsGS(fbFriends);
-                                //    preferenceManager.saveFbFrnds(Facebook_Friends.this, fbFriends);
-                                //  FbFrndsGS fbFrndsGS1 = (FbFrndsGS) getParcelable("student");
+                                    //  FbFrndsGS fbFrndsGS = new FbFrndsGS(fbFriends);
+                                    //    preferenceManager.saveFbFrnds(Facebook_Friends.this, fbFriends);
+                                    //  FbFrndsGS fbFrndsGS1 = (FbFrndsGS) getParcelable("student");
 
 
-                                if (preferenceManager.getKey_linkedfb().equals("link")) {
-                                    fbClick = true;
-                                    iv_fb_addfrnd.setImageResource(R.mipmap.facebook_select);
-                                    ll_fb_addfrnd.setBackgroundColor(Color.parseColor("#cedc00"));
-                                    ll_mail_addfrnd.setBackgroundColor(Color.parseColor("#ffffff"));
-                                    //  iv_mail_addfrnd.setImageResource(R.mipmap.email_unselect);
-                                    btn_search_addfrnd.setVisibility(View.GONE);
+                                    if (preferenceManager.getKey_linkedfb().equals("link")) {
+                                        fbClick = true;
+                                        iv_fb_addfrnd.setImageResource(R.mipmap.facebook_select);
+                                        ll_fb_addfrnd.setBackgroundColor(Color.parseColor("#cedc00"));
+                                        ll_mail_addfrnd.setBackgroundColor(Color.parseColor("#ffffff"));
+                                        //  iv_mail_addfrnd.setImageResource(R.mipmap.email_unselect);
+                                        btn_search_addfrnd.setVisibility(View.GONE);
 
                                    /* if (fbFrndsList != null) {
                                         if (fbFrndsList.size() > 0) {
@@ -426,12 +433,13 @@ public class AddFriend extends Fragment implements NetworkCallBack {
                                         }
                                     }*/
 
-                                    et_seach_addfrnd.setText("");
-                                } else {
-                                    Toast.makeText(mainActivity, "Not Linked with Facebook", Toast.LENGTH_SHORT).show();
+                                        et_seach_addfrnd.setText("");
+                                    } else {
+                                        Toast.makeText(mainActivity, "Not Linked with Facebook", Toast.LENGTH_SHORT).show();
+                                    }
+
+
                                 }
-
-
                             }
                         }
                     }).executeAsync();
@@ -533,9 +541,33 @@ public class AddFriend extends Fragment implements NetworkCallBack {
                                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                                     }
                                     rv_serachlist_addfrnd.setVisibility(View.VISIBLE);
-                                    AddFrndAdapter addFrndAdapter = new AddFrndAdapter(mainActivity,
-                                            searchedList, "email");
-                                    rv_serachlist_addfrnd.setAdapter(addFrndAdapter);
+
+                                    if (searchedList.size() > 0) {
+                                        for (int i = 0; i < searchedList.size(); i++) {
+                                            long id = Long.parseLong(searchedList.get(i).getUserId());
+
+                                            for (int j = 0; j < user_id_ischeck.size(); j++) {
+                                                Long ss = user_id_ischeck.get(j);
+                                                if (id == ss) {
+                                                    flag=true;
+                                                    searchedList.remove(addFrndGS);
+                                                    AddFrndAdapter addFrndAdapter = new AddFrndAdapter(mainActivity, searchedList, "email");
+                                                    rv_serachlist_addfrnd.setAdapter(addFrndAdapter);
+                                                  //  dialogBox();
+                                                  //  Toast.makeText(mainActivity, "You've already added this email id", Toast.LENGTH_SHORT).show();
+                                                   // flag=false;
+                                                }else {
+                                                    AddFrndAdapter addFrndAdapter = new AddFrndAdapter(mainActivity, searchedList, "email");
+                                                    rv_serachlist_addfrnd.setAdapter(addFrndAdapter);
+                                                }
+                                            }
+                                        }
+
+                                        if(flag){
+                                            dialogBox();
+                                        }
+                                    }
+
                                 } else {
                                     Toast.makeText(mainActivity, "You can't add your self", Toast.LENGTH_SHORT).show();
                                 }
@@ -621,6 +653,25 @@ public class AddFriend extends Fragment implements NetworkCallBack {
                 Toast.makeText(mainActivity, "Network Error", Toast.LENGTH_SHORT).show();
                 break;
         }
+
+
+    }
+
+    public void dialogBox() {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mainActivity);
+        dialog.setCancelable(false);
+        dialog.setMessage("You've already added this email id" );
+        dialog.setNegativeButton("OK ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        final AlertDialog alert = dialog.create();
+        alert.show();
+
     }
 
     @Override

@@ -562,7 +562,7 @@ public class SelfSnapAdapter extends RecyclerView.Adapter<SelfSnapAdapter.Holder
             Toast.makeText(mainActivity, "No Internet Connection ", Toast.LENGTH_SHORT).show();
         }
     }
-    public void likeDislike(int position) {
+    private void likeDislike(int position) {
         updatePost = position;
         if (Network.isConnected(mainActivity)) {
             JsonObject jsonObject = new JsonObject();

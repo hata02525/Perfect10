@@ -597,11 +597,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
 
-
-
-
-
-
                         if (jsonObject != null) {
                             Log.d(TAG+"_response", "DPSSSSSSSSss" + response);
                             if (jsonObject.has("message")) {
@@ -637,6 +632,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                         if (fbFrndsList != null){
                                             for (int a = 0; a < fbFrndsList.size(); a++){
                                                 String soId = fbFrndsList.get(a).getId();
+                                                assert friends != null;
                                                 if (friends.length() > 0){
                                                     for (int i = 0; i < friends.length(); i++){
                                                         JSONObject jon = Model.getObject(friends, i);

@@ -36,6 +36,7 @@ import app.com.perfec10.util.Progress;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static app.com.perfec10.fragment.profile.EditProfile.social_id;
+import static app.com.perfec10.fragment.profile.EditProfile.user_id_ischeck;
 import static app.com.perfec10.helper.HelperClass.returnEmptyString;
 
 /**
@@ -200,6 +201,7 @@ public class FriendProfile extends Fragment implements NetworkCallBack{
                 try {
 
                     social_id.clear();
+                    user_id_ischeck.clear();
 
                     if (requestCode==1){
                         Log.d(TAG+" reponse profile", jsonObject+" ");

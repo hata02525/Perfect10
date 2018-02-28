@@ -42,6 +42,44 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/ll_screensort_share"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:background="@android:color/white"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/tags"
+                    android:background="@color/colorAccent"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="?actionBarSize">
+
+                    <ImageView
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:layout_marginBottom="@dimen/dp_15"
+                        android:id="@+id/img"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/ic_title_logo"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_toRightOf="@+id/img"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_20"
+                        android:text="@string/app_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+            <LinearLayout
+                android:background="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -75,6 +113,7 @@
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_marginRight="@dimen/dp_20"/>
             <LinearLayout
+                android:background="@android:color/white"
                 android:id="@+id/ll_location_share"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,7 +154,6 @@
                 android:background="@color/view_color"/>
 
             <LinearLayout
-                android:id="@+id/ll_screensort_share"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -446,6 +484,7 @@
             </LinearLayout>
             </LinearLayout>
 
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_toshare_share"
@@ -528,6 +567,8 @@
                     android:textAlignment="center"
                     android:padding="@dimen/dp_10"/>
             </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

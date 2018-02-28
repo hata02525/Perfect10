@@ -131,6 +131,7 @@ public class EditProfile extends Fragment implements GoogleApiClient.OnConnectio
     private String TAG = "EditProfile";
 
     public static ArrayList<Long> social_id=new ArrayList<>();
+    public static ArrayList<Long> user_id_ischeck=new ArrayList<>();
 
     public EditProfile(MainActivity mainActivity, String post, String frnd, String name,
                        String location, String age, String gender, String race, String imageUrl) {
